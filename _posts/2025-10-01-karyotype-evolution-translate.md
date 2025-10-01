@@ -2,7 +2,7 @@
 title: "使用WGDI重建祖先染色体核型及其演化过程"
 tags: [wgdi,ACK]
 date: 2025-10-01 21:41:20 +0800
-description: "像解魔方一样有趣好玩。但卡住的时候也像解魔方一样，令人恼火。"
+description: "像解魔方一样有趣好玩，又令人恼火。"
 categories: [生物信息学]
 ---
 
@@ -59,7 +59,7 @@ AEK 的染色体数目和基因组成几乎是公认的。我们以自己的方�
 
 我们利用水青树（*Tetracentron sinense*）[^4]重建 AEK。首先使用 WGDI 工具的 `-d` 参数绘制水青树内部的共线性 *d-d plot*。多倍化分析表明水青树经历了两轮全基因组复制事件，这意味着该物种保有 AEK 的四份拷贝（图3）。
 
-<img src="/home/hyli360/图片/tsi13s_tsi13s.dotplot.nosort.png" style="zoom: 33%;" />
+<img src="/assets/img/karyotype_evolution_translate/tsi13s_tsi13s.dotplot.nosort.png" style="zoom: 33%;" />
 
 **图3**  *水青树基因组自共线性点图*
 
