@@ -4,6 +4,7 @@ tags: [wgdi,ACK]
 date: 2025-10-01 21:41:20 +0800
 description: "像解魔方一样有趣好玩，又令人恼火。"
 categories: [生物信息学]
+license_name: unlicense
 ---
 
 > 感谢川大[孙朋川](https://scholar.google.com/citations?user=09MgkwsAAAAJ&hl=zh-CN)提供的WGDI（*Whole-Genome Duplication Integrated*）研究工具，以及使用该工具进行核型演化研究的帮助文档。原始文档可在[此处](https://github.com/SunPengChuan/wgdi-example/blob/main/Karyotype_Evolution.md)获取。
