@@ -8,7 +8,6 @@ categories: [生物信息学,工具]
 
 > 感谢川大[孙朋川](https://scholar.google.com/citations?user=09MgkwsAAAAJ&hl=zh-CN)提供的WGDI（*Whole-Genome Duplication Integrated*）研究工具，以及使用该工具进行核型演化研究的帮助文档。原始文档可在[此处](https://github.com/SunPengChuan/wgdi-example/blob/main/Karyotype_Evolution.md)获取。
 >
-> 该文档属于[公有领域](https://unlicense.org/)。
 
 ## 什么是核型演化（Karyotype Evolution）?
 
@@ -53,9 +52,9 @@ categories: [生物信息学,工具]
 
 ACK 的所有原染色体均与每个现存基因组进行比较，并确定了这些原染色体组成的核型特征。根据 ACK 原染色体与现存物种染色体之间的融合和断裂位置，可推断核型变化及系统发育关系（图2 c）。
 
-## 核型重建演示——以 AEK[^3] 为例
+## 核型重建演示——以 AEK 为例
 
-AEK 的染色体数目和基因组成几乎是公认的。我们以自己的方法为例，展示 AEK 的详细重建过程。
+AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的方法为例，展示 AEK 的详细重建过程。
 
 我们利用水青树（*Tetracentron sinense*）[^4]重建 AEK。首先使用 WGDI 工具的 `-d` 参数绘制水青树内部的共线性 *d-d plot*。多倍化分析表明水青树经历了两轮全基因组复制事件，这意味着该物种保有 AEK 的四份拷贝（图3）。
 
@@ -129,9 +128,9 @@ AEK 的染色体数目和基因组成几乎是公认的。我们以自己的方�
 
 **图10**  *中华黄杨与 AEK 的共线性关系点图*
 
-## 核型重建演示——以 ACEK[^6] 为例
+## 核型重建演示——以 ACEK为例
 
-在经历全基因组三倍化后，ACEK 应具有 3×7=21 条原染色体[^7]。为探究这21条原染色体在进化过程中是否存在共有的染色体融合事件，我们在原有葡萄基因组参照基础上新增连香树（*Cercidiphyllum japonicum*）作为外群参照[^8]。通过既有分析流程，可清晰追溯 AEK 原染色体在连香树基因组中的核型排布特征。
+在经历全基因组三倍化后，ACEK[^6] 应具有 3×7=21 条原染色体[^7]。为探究这21条原染色体在进化过程中是否存在共有的染色体融合事件，我们在原有葡萄基因组参照基础上新增连香树（*Cercidiphyllum japonicum*）作为外群参照[^8]。通过既有分析流程，可清晰追溯 AEK 原染色体在连香树基因组中的核型排布特征。
 
 <img alt="连香树与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/cja12s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
 
