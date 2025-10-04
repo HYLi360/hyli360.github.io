@@ -19,7 +19,7 @@ categories: [生物信息学,工具]
 
 ## 识别 ACK 的基本规则与方法
 
-曾经进行的 ACK 重建，常采用基于共线性关系定义的**共同祖先区域**（*contiguous ancestral regions*，CARs）。然而，由于染色体结构反常，以及零散狭窄的共线性区段，未定义区域会形成间隙，导致结果高度依赖于输入文件与参数设置。大量的间隙区域还会阻碍对染色体变化的进一步探索。与传统方法不同，我们通过寻找高度分化谱系间染色体融合过程中共享的完整染色体或类染色体共线性区块，来鉴定ACK。
+以往进行的 ACK 重建，常采用基于共线性关系定义的**共同祖先区域**（*contiguous ancestral regions*，CARs）。然而，由于染色体结构反常，以及零散狭窄的共线性区段，未定义区域会形成间隙，导致结果高度依赖于输入文件与参数设置。大量的间隙区域还会阻碍对染色体变化的进一步探索。与传统方法不同，我们通过寻找高度分化谱系间染色体融合过程中共享的完整染色体或类染色体共线性区块，来鉴定ACK。
 
 在染色体融合过程中，**受端粒保护的类染色体同线性区块得以保留**，使得融合后的染色体携带端粒结构。但需注意，本方法并未排除染色体分裂现象——即一个原始染色体可能分裂为两个染色体。在此情形下，我们可在其他谱系中识别该原染色体，其可能完整保留或与其他原始染色体发生融合。
 
@@ -100,7 +100,7 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 
 **图6**  水青树与 AEK 的共线性关系点图
 
-接下来又是一系列的计算：用 `-icl` 参数查找它们之间的共线性基因；用 `-bi` 参数整合同源区块以便进行筛选；用 `-c` 参数滤除可能源自更古老进化事件的区块；最后用 `-bk` 参数验证剩余区块的合理性（图7）。[^5]
+接下来又是一系列的计算：用 `-icl`（*Improved collinearity*）参数查找它们之间的共线性基因；用 `-bi`（*BlockInfo*）参数整合同源区块以便进行筛选；用 `-c`（*Correspondence*）参数滤除可能源自更古老进化事件的区块；最后用 `-bk`（*BlockKs*）参数验证剩余区块的合理性（图7）。[^5]
 
 <img alt="共线性块之间的 Ks 值" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.blockks.png" />
 
@@ -209,7 +209,7 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 ----
 
 [^1]: 也叫“原染色体”（*Protochromosome*），与前文 *Ancestor Chromosome* 基本同义。原文中“祖先染色体”与“原染色体”两词混用，故直接翻译不做替换。
-[^2]: 《纪念孟德尔、麦克林托克与达林顿：论染色体末端融合与嵌套融合》(*Celebrating Mendel, McClintock, and Darlington: On end-to-end chromosome fusions and nested chromosome fusions*)，载于 *Plant Cell* 期刊。https://doi.org/10.1093/plcell/koac116
+[^2]: 《纪念孟德尔、麦克林托克与达林顿：论染色体末端融合与嵌套融合》(*Celebrating Mendel, McClintock, and Darlington: On end-to-end chromosome fusions and nested chromosome fusions*)，载于 *Plant Cell* 期刊。[https://doi.org/10.1093/plcell/koac116](https://doi.org/10.1093/plcell/koac116)
 [^3]: 即 *Ancestral eudicots karyotypes*，双子叶植物祖先染色体核型。
 [^4]: 较原始的双子叶植物，也是真双子叶植物四大早期分化支系之一。
 [^5]: WGDI的参数众多，需要的文件复杂，具体参数与文件准备可参考该文章。
