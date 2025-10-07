@@ -7,7 +7,6 @@ categories: [生物信息学,工具]
 ---
 
 > 感谢川大[孙朋川](https://scholar.google.com/citations?user=09MgkwsAAAAJ&hl=zh-CN)提供的WGDI（*Whole-Genome Duplication Integrated*）研究工具，以及使用该工具进行核型演化研究的帮助文档。原始文档可在[此处](https://github.com/SunPengChuan/wgdi-example/blob/main/Karyotype_Evolution.md)获取。
->
 
 ## 什么是核型演化（Karyotype Evolution）?
 
@@ -29,9 +28,9 @@ categories: [生物信息学,工具]
 
 基本的染色体融合模式（图1），包括相互易位染色体臂（*reciprocally translocated chromosome arms*，RTA）、末端-末端连接（*end-end joining*，EEJ），以及嵌套式染色体融合（*nested chromosome fusion*，NCF）。染色体易位包括相互易位和罗伯逊易位，分别对应 RTA 和 EEJ。NCF 模式也已被广泛认知并应用[^2]。
 
-<img alt="染色体融合的三种基本模式" src="assets/img/karyotype_evolution_translate/Karyotype evolution model.png" />
+<img alt="1" src="assets/img/karyotype_evolution_translate/Karyotype evolution model.png" />
 
-**图1**  *染色体融合的三种基本模式*
+**图1**    *染色体融合的三种基本模式*
 
 尽管染色体结构变异在基因组中频繁发生，但原染色体融合断点恰好与后续进化阶段中其他结构变异断点重叠的概率似乎非常低。因此，这类融合断点可准确用于推断两个谱系是否拥有共同祖先。类似地，虽然倒位常在染色体进化过程中出现，但其几乎不可能破坏原染色体融合断点 。故倒位对核型重建的影响甚微。
 
@@ -46,9 +45,9 @@ categories: [生物信息学,工具]
 3. 在所有现存基因组中删除该共享区块及其同源小型区块，并将剩余部分连接为"完整染色体"。
 4. 启动新一轮"共线性探查"，直至每个现存基因组无剩余基因组区块为止，从而提取所有原始染色体。
 
-<img alt="构建 ACK 的过程" src="assets/img/karyotype_evolution_translate/Fig2.png" />
+<img alt="2" src="assets/img/karyotype_evolution_translate/Fig2.png" />
 
-**图2**  *根据三种基本的染色体融合类型（a），基于高度分化谱系间共享的染色体或类染色体同线性块来初步识别原染色体（b），并确定共同祖先的系统发育关系和核型进化（c）。*
+**图2**    *根据三种基本的染色体融合类型（a），基于高度分化谱系间共享的染色体或类染色体同线性块来初步识别原染色体（b），并确定共同祖先的系统发育关系和核型进化（c）。*
 
 ACK 的所有原染色体均与每个现存基因组进行比较，并确定了这些原染色体组成的核型特征。根据 ACK 原染色体与现存物种染色体之间的融合和断裂位置，可推断核型变化及系统发育关系（图2 c）。
 
@@ -58,19 +57,19 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 
 我们利用水青树（*Tetracentron sinense*）[^4]重建 AEK。首先使用 WGDI 工具的 `-d` 参数绘制水青树内部的共线性 *d-d plot*。多倍化分析表明水青树经历了两轮全基因组复制事件，这意味着该物种保有 AEK 的四份拷贝（图3）。
 
-<img alt="水青树基因组自共线性点图" src="assets/img/karyotype_evolution_translate/tsi13s_tsi13s.dotplot.nosort.png" style="zoom: 33%;" />
+<img alt="3" src="assets/img/karyotype_evolution_translate/tsi13s_tsi13s.dotplot.nosort.png" style="zoom: 33%;" />
 
-**图3**  *水青树基因组自共线性点图*
+**图3**    *水青树基因组自共线性点图*
 
-之后，我们在 `.len` 文件中反复调整染色体的顺序，让这些共线性连线各自聚到一起（图4 和 图5）。
+之后，我们在 `.len` 文件中反复调整染色体的顺序，让这些共线性连线各自聚到一起（图4和图5）。
 
-<img alt="调整前（左）/后（右）的 `.len` 文件*" src="assets/img/karyotype_evolution_translate/tsi13s.lens.png" style="zoom: 67%;" />
+<img alt="4" src="assets/img/karyotype_evolution_translate/tsi13s.lens.png" style="zoom: 67%;" />
 
-**图4**  *调整前（左）/后（右）的* `.len` *文件*
+**图4**    *调整前（左）/后（右）的* `.len` *文件*
 
-<img alt="重新绘制的 d-d plot" src="assets/img/karyotype_evolution_translate/tsi13s_tsi13s.dotplot.order.new.png" style="zoom: 33%;" />
+<img alt="5" src="assets/img/karyotype_evolution_translate/tsi13s_tsi13s.dotplot.order.new.png" style="zoom: 33%;" />
 
-**图5**  *重新绘制的 d-d plot，可清楚看出其 1:4 的共线性深度。疑似来自不同原染色体的共线性区段已在图中用不同颜色标出*
+**图5**    *重新绘制的 d-d plot，可清楚看出其 1:4 的共线性深度。疑似来自不同原染色体的共线性区段已在图中用不同颜色标出*
 
 我们分别从不同簇群中以完整染色体作为原染色体提取单倍型。例如蓝色簇中的 22 号和 20 号染色体、红色簇中的 17 号和 7 号染色体、草绿色簇中的 24 号、16 号和 9 号染色体、天蓝色簇中的 13 号、8 号和 21 号染色体、深绿色簇中的 18 号、4 号和12 号染色体、橙黄色簇中的 5 号、14 号、6 号和 15 号染色体，以及紫色簇中的 10号、19号、11号和23号染色体。我们从每个簇群中选取一个原初染色体，并用不同颜色和组别进行标记。结果文件如下所示。
 
@@ -96,51 +95,51 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 
 水青树的大部分基因应源自 AEK。为防止忽略其他原染色体，我们进一步将 AEK 映射至水青树。首先采用 WGDI 工具的 `-d` 参数绘制水青树与 AEK 的同源 *d-d plot*（图6）。
 
-<img alt="水青树与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.dotplot.order.png" style="zoom: 33%;" />
+<img alt="6" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.dotplot.order.png" style="zoom: 33%;" />
 
-**图6**  水青树与 AEK 的共线性关系点图
+**图6**    水青树与 AEK 的共线性关系点图
 
 接下来又是一系列的计算：用 `-icl`（*Improved collinearity*）参数查找它们之间的共线性基因；用 `-bi`（*BlockInfo*）参数整合同源区块以便进行筛选；用 `-c`（*Correspondence*）参数滤除可能源自更古老进化事件的区块；最后用 `-bk`（*BlockKs*）参数验证剩余区块的合理性（图7）。[^5]
 
-<img alt="共线性块之间的 Ks 值" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.blockks.png" />
+<img alt="7" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.blockks.png" />
 
-**图7**  *计算共线性块之间的 Ks 值，然后显示在原先的点图中。点迹变少主要来自提取共线性区块时零散共线性关系的丢失*
+**图7**    *计算共线性块之间的 Ks 值，然后显示在原先的点图中。点迹变少主要来自提取共线性区块时零散共线性关系的丢失*
 
 以使用 `-km` 参数生成的基因组与 AEK 映射关系作为补充文件，重新使用 `-d` 进行作图。此时可看到，与 AEK 同源的部分在左侧以不同颜色标出（图8）。
 
-<img alt="使用 `-km` 结果重新绘制的点图" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.dotplot.ancestor.png" style="zoom: 33%;" />
+<img alt="8" src="assets/img/karyotype_evolution_translate/tsi13s_aek_tsi13s.dotplot.ancestor.png" style="zoom: 33%;" />
 
-**图8**  *使用* `-km` *结果重新绘制的点图*
+**图8**    *使用* `-km` *结果重新绘制的点图*
 
 我们可以观察到，水青树的大部分基因与 AEK 存在共线性区块。同时，水青树的 Chr1 可通过 NCF 模式将 AEK1 插入 AEK2 后，再经 EEJ 模式与另一个 AEK1 融合形成，该过程使祖先染色体数量减少两条；其 Chr1 还可通过 EEJ 模式融合 AEK3 与 AEK4 形成，此过程使祖先染色体减少一条；其 Chr3 则可通过 NCF 模式将 AEK2 插入 AEK5 形成，该过程亦使祖先染色体减少一条。水青树从 AEK 经历两次全基因组倍增后理论上应具有 4×7=28 条染色体，当前通过 2+1+1=4 的减少过程实际保有24条染色体。未发现融合染色体重复现象，据此可推断水青树近期全基因组倍增前未发生染色体融合事件。水青树的核型演化过程与本研究提出的模型相符，这进一步验证了该模型的可靠性。
 
-需指出的是，目前得到的该 AEK 结果尚且不能代表所有真双子叶植物的祖先核型，我们需要在其他物种中进一步验证。我们使用葡萄（欧亚葡萄，*V. vinifera*）来验证，依照先前流程，我们采用 WGDI 工具并设置参数 “`-d,` `-icl`, `-bi`,`-c`, `-km`, `-d`” 进行比对。
+需指出的是，目前得到的该 AEK 结果尚且不能代表所有真双子叶植物的祖先核型，我们需要在其他物种中进一步验证。我们使用葡萄（欧亚葡萄，*V. vinifera*）来验证，依照先前流程，我们采用 WGDI 工具并设置参数 “`-d,` `-icl`, `-bi`,`-c`, `-km`, `-d`” 进行比对（图9）。
 
-<img alt="欧亚葡萄与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/vvi161s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
+<img alt="9" src="assets/img/karyotype_evolution_translate/vvi161s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
 
-**图9**  *欧亚葡萄与 AEK 的共线性关系点图*
+**图9**    *欧亚葡萄与 AEK 的共线性关系点图*
 
 多倍性分析表明，葡萄存在全基因组三倍化事件，这意味着葡萄具有三份 AEK 拷贝。对于 AEK 的每个原染色体，均可在葡萄中发现完整的同源染色体，且不存在任何染色体构成原染色体的真子集。因此，这种包含 7 条原染色体的 AEK 的确可代表所有真双子叶植物的祖先核型。
 
-所选物种对于核型重建至关重要。部分物种具有稳定的染色体结构，且大多数染色体为原染色体。例如，中华黄杨（*Buxus sinica*）拥有14条染色体，并经历了独立的全基因组复制事件。其染色体在一次全基因组复制后直接从祖先十字花科核型保留而来。我们绘制了祖先十字花科核型与中华黄杨的同源点图，通过水青树推断的祖先十字花科核型与中华黄杨的结果一致，表明核型重建结果具有唯一性。
+所选物种对于核型重建至关重要。部分物种具有稳定的染色体结构，且大多数染色体为原染色体。例如，中华黄杨（*Buxus sinica*）拥有14条染色体，并经历了独立的全基因组复制事件。其染色体在一次全基因组复制后直接从祖先十字花科核型保留而来。我们绘制了祖先十字花科核型与中华黄杨的同源点图，通过水青树推断的祖先十字花科核型与中华黄杨的结果一致，表明核型重建结果具有唯一性（图10）。
 
-<img alt="中华黄杨与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/bsi11s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
+<img alt="10" src="assets/img/karyotype_evolution_translate/bsi11s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
 
-**图10**  *中华黄杨与 AEK 的共线性关系点图*
+**图10**    *中华黄杨与 AEK 的共线性关系点图*
 
 ## 核型重建演示——以 ACEK为例
 
-在经历全基因组三倍化后，ACEK[^6] 应具有 3×7=21 条原染色体[^7]。为探究这21条原染色体在进化过程中是否存在共有的染色体融合事件，我们在原有葡萄基因组参照基础上新增连香树（*Cercidiphyllum japonicum*）作为外群参照[^8]。通过既有分析流程，可清晰追溯 AEK 原染色体在连香树基因组中的核型排布特征。
+在经历全基因组三倍化后，ACEK[^6] 应具有 3×7=21 条原染色体[^7]。为探究这21条原染色体在进化过程中是否存在共有的染色体融合事件，我们在原有葡萄基因组参照基础上新增连香树（*Cercidiphyllum japonicum*）作为外群参照[^8]。通过既有分析流程，可清晰追溯 AEK 原染色体在连香树基因组中的核型排布特征（图11）。
 
-<img alt="连香树与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/cja12s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
+<img alt="11" src="assets/img/karyotype_evolution_translate/cja12s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
 
-**图11**  *连香树与 AEK 的共线性关系点图*
+**图11**    *连香树与 AEK 的共线性关系点图*
 
-随后，我们使用 WGDI 工具的 `-d` 参数绘制了连香树（Cja）与葡萄（Vvi）间的同源点阵图。图中红点表示同源基因对为最佳匹配结果，由这些红点连接的共线性区块表明它们是物种分化后保留的旁系同源区块。源自相同原染色体的旁系同源区块采用统一颜色标识，但本点阵图中存在四处颜色不匹配现象（红色圆圈标注）。
+随后，我们使用 WGDI 工具的 `-d` 参数绘制了连香树（Cja）与葡萄（Vvi）间的同源点阵图。图中红点表示同源基因对为最佳匹配结果，由这些红点连接的共线性区块表明它们是物种分化后保留的旁系同源区块。源自相同原染色体的旁系同源区块采用统一颜色标识，但本点阵图中存在四处颜色不匹配现象（红色圆圈标注）（图12）。
 
-<img alt="连香树与欧亚葡萄的共线性关系点图" src="assets/img/karyotype_evolution_translate/cja12s_vs_vvi161s.png" style="zoom:33%;" />
+<img alt="12" src="assets/img/karyotype_evolution_translate/cja12s_vs_vvi161s.png" style="zoom:33%;" />
 
-**图12**  *连香树与欧亚葡萄的共线性关系点图。红色圆圈中间出现的红色连线属于异常的狭窄共线性区段*
+**图12**    *连香树与欧亚葡萄的共线性关系点图。红色圆圈中间出现的红色连线属于异常的狭窄共线性区段*
 
 这是因为某些结构变异的小片段与 AEK 之间缺乏高质量的共线性片段。针对这些情况，我们选择**未发生结构变异的整条染色体**作为 ACEK 的原染色体，且**优先选择来自连香树的染色体**（因为连香树的核型显然更接近 ACEK）。
 
@@ -152,59 +151,114 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 - 对于 AEK4（天蓝），由于连香树天蓝色条带的不连续分布，我们选择 Cja15、Cja14 及 Vvi4 的天蓝色条带；
 - 对于 AEK5（深绿），由于葡萄深绿色条带的分散分布，我们选择 Cja7、Cja6 和 Cja19；
 - 对于 AEK6（橙黄），由于连香树橙黄色条带的不连续分布，我们选择 Vvi6、Vvi8 和 Vvi13；
-- 对于 AEK7（紫），由于 Cja1 的紫色条带对应完整染色体 Vvi5，我们选择 Vvi5、Cja18 和 Cja16（参考图12 和图 13）。
+- 对于 AEK7（紫），由于 Cja1 的紫色条带对应完整染色体 Vvi5，我们选择 Vvi5、Cja18 和 Cja16（参考图12和图 13）。
 
 该过程中未发现共享的融合事件，故分化前的 ACEK 数量为 21。
 
-<img alt="比较连香树、欧亚葡萄与 AEK 的共线性关系点图" src="assets/img/karyotype_evolution_translate/cja12s_vvi161s.png" style="zoom: 25%;" />
+<img alt="13" src="assets/img/karyotype_evolution_translate/cja12s_vvi161s.png" style="zoom: 25%;" />
 
-**图13**  *比较连香树、欧亚葡萄与 AEK 的共线性关系点图，以选择合适的染色体重组 ACEK*
+**图13**    *比较连香树、欧亚葡萄与 AEK 的共线性关系点图，以选择合适的染色体重组 ACEK*
 
 最终，我们将自己的 ACEK 映射至连香树和葡萄基因组。就连香树而言，自 ACEK 分化后经历两次融合事件：通过 NCF 模式将 ACEK18 插入 ACEK20（右上箭头），以及通过 EEJ 模式融合 ACEK1 与 ACEK7（左下箭头）（图14）。
 
-<img alt="连香树、欧亚葡萄与自构建 ACEK 的共线性点图" src="assets/img/karyotype_evolution_translate/cja_vvi_acek.png" style="zoom:25%;" />
+<img alt="14" src="assets/img/karyotype_evolution_translate/cja_vvi_acek.png" style="zoom:25%;" />
 
-**图14**  *连香树、欧亚葡萄与自构建 ACEK 的共线性点图*
+**图14**    *连香树、欧亚葡萄与自构建 ACEK 的共线性点图*
 
 对葡萄而言，为便于追溯其祖先染色体变异，我们对涉及重排的染色体重新绘制了点阵图（图15）。Vvi3+12 完全等同于 ACEK5+2，该现象与我们建立的 RTA 模型相符。若假设两条染色体先发生断裂再融合，断裂产生的四条染色体更易与数量更多的其他染色体结合。因此在此采用 RTA 模型更具合理性。通过 RTA 模型，ACEK9 与 ACEK17 融合形成两条染色体（Vvi10 和 Vvi1）；ACEK21 与 ACEK3 融合为一条染色体（Vvi14）及一段微小染色体（Vvi4 中段）；该微小染色体又与 ACEK12 进一步融合形成两条染色体（Vvi4 部分区段与 Vvi7 部分区段）。这两条染色体后期分别与 ACEK18、ACEK14 融合为Vvi4 和 Vvi7。
 
-葡萄的染色体演化过程较为复杂，特别是 ACEK21、ACEK3 与 ACEK12之间（对应葡萄第 14、4 和 7 号染色体）存在的变异易引发可靠性质疑。值得庆幸的是，葡萄属另一亚属的研究数据为我们提供了有力佐证。
+葡萄的染色体演化过程较为复杂，特别是 ACEK21、ACEK3 与 ACEK12之间（对应葡萄第 14、4 和 7 号染色体）存在的变异易引发可靠性质疑（图15）。值得庆幸的是，葡萄属另一亚属的研究数据为我们提供了有力佐证。
 
-<img alt="对葡萄基因组中发生重排的染色体重做点图" src="assets/img/karyotype_evolution_translate/vvi_acek_local.png" style="zoom: 33%;" />
+<img alt="15" src="assets/img/karyotype_evolution_translate/vvi_acek_local.png" style="zoom: 33%;" />
 
-**图15**  *对葡萄基因组中发生重排的染色体重做点图。部分染色体（特别是葡萄的 14、4 和 7 号染色体）与  ACEK 的关系复杂，难以阐述，也难以证明*
+**图15**    *对葡萄基因组中发生重排的染色体重做点图。部分染色体（特别是葡萄的 14、4 和 7 号染色体）与  ACEK 的关系复杂，难以阐述，也难以证明*
 
 ## 葡萄属两个亚属的动态演化历史
 
-葡萄属分为麝香葡萄亚属（Muscadinia Planch，2n=40）和真葡萄亚属（Euvitis Planch 2n=38）。圆叶葡萄（*Muscadinia rotundifolia*）属于麝香葡萄亚属，而欧亚葡萄（*V. vinifera*）属于真葡萄亚属。我们以相同方式获得了圆叶葡萄的祖先十字花科核型定位。
+葡萄属分为麝香葡萄亚属（Muscadinia Planch，2n=40）和真葡萄亚属（Euvitis Planch，2n=38）。圆叶葡萄（*V. rotundifolia*）属于麝香葡萄亚属，而欧亚葡萄（*V. vinifera*）属于真葡萄亚属。我们以相同方式获得了圆叶葡萄的祖先十字花科核型定位（图16）。
 
-<img alt="圆叶葡萄与 ACEK 的共线性点图" src="assets/img/karyotype_evolution_translate/mro20sB_acek_cja_vvi.dotplot.ancestor.png" style="zoom:33%;" />
+<img alt="16" src="assets/img/karyotype_evolution_translate/mro20sB_acek_cja_vvi.dotplot.ancestor.png" style="zoom:33%;" />
 
-**图16**  *圆叶葡萄与 ACEK 的共线性点图*
+**图16**    *圆叶葡萄与 ACEK 的共线性点图*
 
-比较欧亚葡萄与圆叶葡萄时发现，大多数祖先染色体融合事件在葡萄属中具有共享性。唯一差异体现在 MroB7、MroB20 与 Vvi7 之间。
+比较欧亚葡萄与圆叶葡萄时发现（图17和图18），大多数祖先染色体融合事件在葡萄属中具有共享性。唯一差异体现在 MroB7、MroB20 与 Vvi7 之间。
 
 假设 MroB7 和 MroB20 由 Vvi7 分裂形成。但 Vvi7 来自 ACEK12+14，要让它再分裂回 MroB7（=ACEK14），显然不太可能。因此，将 MroB7 与 MroB20 融合为 Vvi7 更为合理。
 
 同时，MroB14 未发生 ACEK 框架下的倒位现象。这些证据均表明，圆叶葡萄可能更接近葡萄属的祖先核型。
 
-<img alt="圆叶葡萄与欧亚葡萄的共线性点图" src="assets/img/karyotype_evolution_translate/mro20sB_vvi161s.dotplot.order.png" style="zoom:33%;" />
+<img alt="17" src="assets/img/karyotype_evolution_translate/mro20sB_vvi161s.dotplot.order.png" style="zoom:33%;" />
 
-**图17**  *圆叶葡萄与欧亚葡萄的共线性点图，包含两个物种基因组到 ACEK 的映射关系*
+**图17**    *圆叶葡萄与欧亚葡萄的共线性点图，包含两个物种基因组到 ACEK 的映射关系*
 
-<img alt="圆叶葡萄 B7 号（MroB7）、B20 号（MroB20）染色体与欧亚葡萄 7 号（Vvi7）染色体的微观共线性点图" src="assets/img/karyotype_evolution_translate/mro20s_vvi161s_local.png" style="zoom:33%;" />
+<img alt="18" src="assets/img/karyotype_evolution_translate/mro20s_vvi161s_local.png" style="zoom:33%;" />
 
-**图18**   *圆叶葡萄 B7 号（MroB7）、B20 号（MroB20）染色体与欧亚葡萄 7 号（Vvi7）染色体的微观共线性点图*
+**图18**     *圆叶葡萄 B7 号（MroB7）、B20 号（MroB20）染色体与欧亚葡萄 7 号（Vvi7）染色体的微观共线性点图*
 
 总而言之，葡萄属 ACK 从 ACEK 开始的动态演化过程如下（图19）：
 
-<img alt="葡萄属核型从 ACEK 开始的动态演化过程" src="assets/img/karyotype_evolution_translate/karytope.png" style="zoom:33%;" />
+<img alt="19" src="assets/img/karyotype_evolution_translate/karytope.png" style="zoom:33%;" />
 
-**图19**   *葡萄属核型从 ACEK 开始的动态演化过程。两种葡萄的 12 号和 3 号染色体都是 ACEK 5 号和 2 号染色体发生 RTA 的结果（a），10 号和 1 号染色体来自 ACEK 9 号和 17 号，也经历了类似过程，但 1 号染色体的交换断点处又发生了一次倒位（b）。比对两种葡萄基因组到 ACEK 的映射，无论是欧亚葡萄在原有的交换断点处发生倒位（MroB14->Vvi14），还是融合了两个非同源染色体（MroB7+MroB20->Vvi7），都证明圆叶葡萄比欧亚葡萄更加原始（c）。由此，葡萄属 14、4 和 7 号染色体形成过程的假说得到证实*
+**图19**     *葡萄属核型从 ACEK 开始的动态演化过程。两种葡萄的 12 号和 3 号染色体都是 ACEK 5 号和 2 号染色体发生 RTA 的结果（a），10 号和 1 号染色体来自 ACEK 9 号和 17 号，也经历了类似过程，但 1 号染色体的交换断点处又发生了一次倒位（b）。比对两种葡萄基因组到 ACEK 的映射，无论是欧亚葡萄在原有的交换断点处发生倒位（MroB14->Vvi14），还是融合了两个非同源染色体（MroB7+MroB20->Vvi7），都证明圆叶葡萄比欧亚葡萄更加原始（c）。由此，葡萄属 14、4 和 7 号染色体形成过程的假说得到证实*
 
 该核型演化模型能够清晰阐明这四个物种的核型演化过程，特别是葡萄属两个亚属的动态演化历史。这使我们有充分理由相信，该模型很可能同样适用于所有被子植物。
 
+## 实践与结果复现
+
+这一部分并非来自原文作者，而是我采用自己搜索到的数据进行的结果重现。
+
+对于重建 AEK，我使用的是来自水青树的参考基因组 [ASM1514329v1](www.ncbi.nlm.nih.gov/datasets/genome/GCA_015143295.1/)。自共线性结果看上去还不错，甚至优于作者的（图20）。
+
+<img alt="20" src="assets/img/karyotype_evolution_translate/dot.png" style="zoom:33%;" />
+
+**图20**     *使用水青树参考基因组建立的自共线性点图，结果与预期一致*
+
+ACK 的颜色标识是：
+
+|  颜色  | 十六进制值 | ACK 代号 |
+| :----: | :--------: | :------: |
+|  深蓝  | `#AE38EK`  |   ACK1   |
+|   橙   | `#F97316`  |   ACK2   |
+|  青绿  | `#10B981`  |   ACK3   |
+|  洋红  | `#E11D48`  |   ACK4   |
+| 紫罗兰 | `#8B5CF6`  |   ACK5   |
+|  金黄  | `#FACC15`  |   ACK6   |
+|  天蓝  | `#0EA5E9`  |   ACK7   |
+
+对于重建 ACEK，由于找不到连香树的基因组，我选择只使用葡萄（*V. vinifera*）的参考基因组 [ASM3070453v1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_030704535.1/?utm_source=gquery&utm_medium=referral&utm_campaign=KnownItemSensor:rs_assembly_id)。先对葡萄和水青树做 blast、做共线性，再将原本水青树到 AEK 的映射延伸到葡萄上。可以看到，结果出现了细微偏差：葡萄的 Chr1 和 Chr 16 各自多出了一个条带；Chr 14 融合断点处的倒位也不见了（图21）。
+
+<img alt="21" src="assets/img/karyotype_evolution_translate/Vvi2Tsi_mapped.png" style="zoom:33%;" />
+
+**图21**     *葡萄与水青树的共线性点图，彩条表示各自所属的 AEK 原染色体*
+
+检查一下葡萄基因组的 ancestor map（节选）：
+
+```1	1	83	#0EA5E9	1
+1	84	187	#F97316	1
+1	188	1145	#0EA5E9	1
+1	1146	1160	#F97316	1
+1	1161	1620	#0EA5E9	1
+16	1	23	#0EA5E9	1
+16	24	1294	#1E3A8A	1
+```
+
+插入了大约 20 个同源序列对，数量占 2% 左右。——只使用葡萄的缺点出现了。
+
+结合作者的结论，暂且做出以下推断：
+
+1. 15、16、2号染色体，以及 6、8、13 号染色体分别来自 AEK 原染色体 AEK1 和 AEK4。
+2. 9、11，以及 4 的黄色区段应来自 AEK6。
+3. 12 和 3 是 AEK2 和 AEK3 发生 RTA 的结果；10 和 1 是 AEK2 和 AEK7 发生 RTA 的结果，且 1 又发生了一次倒位（或许是倒位到那条橙色细线上？）；
+4. 14 的蓝色和紫色区段其实是不完整的，而 4 的蓝色和紫色区段可弥补这个缺口。共线性方向也是同向。很明显，14 的紫和蓝不是一般的拼接，更有可能是 RTA。RTA的另一个产物似乎是跟 14 很像但短得多的染色体，接在了 4 的中间。
+5. 所以 7 的紫色部分是完整的 ACK5，而绿色部分则是位于前段不完整的 ACK3。猜测其中一个 ACK3 被拆到 7 和 4；但**借助其近缘种圆叶葡萄**，可确定应当是 RTA 形成 14 后的副产物与 ACK3 再次发生 RTA。不带 ACK1 片段的产物与另一个 ACK 发生 EEJ，形成 7 号；带 ACK1 片段的则与 ACK7 发生 EEJ，形成 4 号。
+
+我们的实验结果可以和原作者的结果很好地融合在一起。
+
+推断的过程中发现，有近缘种的基因组作为参照对重建 ACK 大有帮助，这对建立和检验假说都有重要意义。如果还能找到 ACEK 的参考基因组，那更将受益无穷。
+
 （全文完）
+
+
 
 ----
 
