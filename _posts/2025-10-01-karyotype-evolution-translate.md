@@ -207,7 +207,7 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 
 这一部分并非来自原文作者，而是我采用自己搜索到的数据进行的结果重现。
 
-对于重建 AEK，我使用的是来自水青树的参考基因组 [ASM1514329v1](www.ncbi.nlm.nih.gov/datasets/genome/GCA_015143295.1/)。自共线性结果看上去还不错，甚至优于作者的（图20）。
+对于重建 AEK，我使用的是来自水青树的参考基因组 [ASM1514329v1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_015143295.1/)。自共线性结果看上去还不错，甚至优于作者的（图20）。
 
 <img alt="20" src="assets/img/karyotype_evolution_translate/dot.png" style="zoom:33%;" />
 
@@ -225,7 +225,7 @@ ACK 的颜色标识是：
 |  金黄  | `#FACC15`  |   ACK6   |
 |  天蓝  | `#0EA5E9`  |   ACK7   |
 
-对于重建 ACEK，由于找不到连香树的基因组，我选择只使用葡萄（*V. vinifera*）的参考基因组 [ASM3070453v1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_030704535.1/?utm_source=gquery&utm_medium=referral&utm_campaign=KnownItemSensor:rs_assembly_id)。先对葡萄和水青树做 blast、做共线性，再将原本水青树到 AEK 的映射延伸到葡萄上。可以看到，结果出现了细微偏差：葡萄的 Chr1 和 Chr 16 各自多出了一个条带；Chr 14 融合断点处的倒位也不见了（图21）。
+对于重建 ACEK，由于找不到连香树的基因组，我选择只使用葡萄（*V. vinifera*）的参考基因组 [ASM3070453v1](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_030704535.1/)。先对葡萄和水青树做 blast、做共线性，再将原本水青树到 AEK 的映射延伸到葡萄上。可以看到，结果出现了细微偏差：葡萄的 Chr1 和 Chr 16 各自多出了一个条带；Chr 14 融合断点处的倒位也不见了（图21）。
 
 <img alt="21" src="assets/img/karyotype_evolution_translate/Vvi2Tsi_mapped.png" style="zoom:33%;" />
 
