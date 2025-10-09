@@ -113,7 +113,7 @@ AEK[^3] 的染色体数目和基因组成几乎是公认的。我们以自己的
 
 我们可以观察到，水青树的大部分基因与 AEK 存在共线性区块。同时，水青树的 Chr1 可通过 NCF 模式将 AEK1 插入 AEK2 后，再经 EEJ 模式与另一个 AEK1 融合形成，该过程使祖先染色体数量减少两条；其 Chr1 还可通过 EEJ 模式融合 AEK3 与 AEK4 形成，此过程使祖先染色体减少一条；其 Chr3 则可通过 NCF 模式将 AEK2 插入 AEK5 形成，该过程亦使祖先染色体减少一条。水青树从 AEK 经历两次全基因组倍增后理论上应具有 4×7=28 条染色体，当前通过 2+1+1=4 的减少过程实际保有24条染色体。未发现融合染色体重复现象，据此可推断水青树近期全基因组倍增前未发生染色体融合事件。水青树的核型演化过程与本研究提出的模型相符，这进一步验证了该模型的可靠性。
 
-需指出的是，目前得到的该 AEK 结果尚且不能代表所有真双子叶植物的祖先核型，我们需要在其他物种中进一步验证。我们使用葡萄（欧亚葡萄，*V. vinifera*）来验证，依照先前流程，我们采用 WGDI 工具并设置参数 “`-d,` `-icl`, `-bi`,`-c`, `-km`, `-d`” 进行比对（图9）。
+需指出的是，目前得到的该 AEK 结果尚且不能代表所有真双子叶植物的祖先核型，我们需要在其他物种中进一步验证。我们使用葡萄（欧亚葡萄，*Vitis vinifera*）来验证，依照先前流程，我们采用 WGDI 工具并设置参数 “`-d,` `-icl`, `-bi`,`-c`, `-km`, `-d`” 进行比对（图9）。
 
 <img alt="9" src="assets/img/karyotype_evolution_translate/vvi161s_aek_tsi13s.dotplot.ancestor.png" style="zoom:33%;" />
 
@@ -300,7 +300,7 @@ ACEK 的颜色标识是：
 > 1	gene-PVL29_000004	42835	45929	-	4
 > ```
 >
-> 只需第一列加上即可。
+> 只需第一行加上即可。
 >
 > **原理：**出错的这一步位于
 >
@@ -317,9 +317,15 @@ ACEK 的颜色标识是：
 
 最后再做一下点图，检验成果。
 
-<img alt="23" src="assets/img/karyotype_evolution_translate/final.png" style="zoom:33%;" />
+<img alt="23" src="assets/img/karyotype_evolution_translate/final1.png" style="zoom:33%;" />
 
 **图23**     *圆叶葡萄基因组与自组建 ACEK 的共线性点图*
+
+不放心。换成葡萄再试一次。
+
+<img alt="24" src="assets/img/karyotype_evolution_translate/final1.png" style="zoom:33%;" />
+
+**图24**     *葡萄基因组与自组建 ACEK 的共线性点图（左侧代表 AEK 核型，而非 ACEK 核型）*
 
 ——一切都值了。
 
