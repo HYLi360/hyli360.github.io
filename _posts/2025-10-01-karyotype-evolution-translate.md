@@ -323,7 +323,7 @@ ACEK 的颜色标识是：
 
 不放心。换成葡萄再试一次。
 
-<img alt="24" src="assets/img/karyotype_evolution_translate/final1.png" style="zoom:33%;" />
+<img alt="24" src="assets/img/karyotype_evolution_translate/final2.png" style="zoom:33%;" />
 
 **图24**     *葡萄基因组与自组建 ACEK 的共线性点图（左侧代表 AEK 核型，而非 ACEK 核型）*
 
