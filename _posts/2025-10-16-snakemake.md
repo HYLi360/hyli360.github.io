@@ -16,7 +16,7 @@ categories: [工具]
 
 ## 最简案例
 
-```makefile
+```
 # 文件夹根目录下的文件 ./Snakefile
 rule all:
     input:
@@ -45,7 +45,7 @@ Snakemake 可通过 DAG（有向无环图）**自动分析执行顺序**，因�
 
 如需做批处理，请灵活使用列表：
 
-```makefile
+```
 SAMPLES = ["A", "B", "C"]
 
 rule all:
@@ -68,7 +68,7 @@ rule analyze:
 
 若要执行 Python script，请使用 `run`：
 
-```makefile
+```
 rule split_fasta:
     input:
         fna="original/genome/genome123.fna"
@@ -84,7 +84,7 @@ def split(fna):
 
 要在终端上执行，请使用 `shell`：
 
-```makefile
+```
 rule all:
     input:
         expand("results/{sample}.txt", sample=glob_wildcards("data/{sample}.csv").sample)
@@ -106,7 +106,7 @@ rule analyze:
 
 `params` 字段可填写指令需要输入的非文件参数：
 
-```makefile
+```
 # 用 DIAMOND 做 BLASTP
 rule blast:
     input:
@@ -137,7 +137,7 @@ rule blast:
 
 要限制 Snakemake 使用的线程数，请在 `rule` 中使用 `threads` 字段。例如，并行化 AUGUSTUS 基因预测：
 
-```makefile
+```
 rule augustus_predict:
     input:
         "split/{seq_id}.fa"
@@ -152,7 +152,7 @@ rule augustus_predict:
 
 `rule` 中的 `resources` 字段允许你进行更精细的资源配置：
 
-```makefile
+```
 rule augustus_predict:
     input:
         "split/{seq_id}.fa"
@@ -173,7 +173,7 @@ rule augustus_predict:
 
 若想在终端显示运行状态信息，请巧用 `message`：
 
-```makefile
+```
 rule name:
     input: "path/to/inputfile", "path/to/other/inputfile"
     output: "path/to/outputfile", "path/to/another/outputfile"
@@ -183,7 +183,7 @@ rule name:
 
 要保存运行日志，请使用 `logs`。它可以将 `run`/`shell` 指令产生的所有日志信息写入到指定路径：
 
-```makefile
+```
 rule name:
     input: "path/to/inputfile"
     output: "path/to/outputfile"
