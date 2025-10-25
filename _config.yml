@@ -98,7 +98,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: assets/avatar/image.png
+avatar: https://github.com/HYLi360/hyli360.github.io/blob/main/assets/avatar/image.png?raw=true
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
