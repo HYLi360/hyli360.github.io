@@ -1,9 +1,9 @@
 ---
-title: "Snakemake用法介绍"
-tags: [snakemake]
+title: Snakemake用法介绍
+tags: snakemake
 date: 2025-10-16 19:28:11 +0800
-description: "复现是任何科学站得住脚的根本前提。"
-categories: [工具]
+description: 复现是任何科学站得住脚的根本前提。
+categories: 工具
 ---
 
 **Snakemake** 是基于 Python 开发的工作流管理框架，旨在通过一个人类可读的文件实现可重复的数据分析流程。其语法兼容 Python 解释器，但语法风格与设计理念很像 GNU Make。
@@ -160,9 +160,7 @@ rule augustus_predict:
         "augustus/{seq_id}.gff3"
     threads: 48
     resources:
-    	# augustus 偏计算，内存可适当少些
-    	# 差不多每个线程给 600 M 就够。实测每线程内存用量不超过 500 M
-    	mem_mb = 30000
+    	mem_mb = 120000
     shell:
         """
         augustus --species=tomato --gff3=on {input} > {output}
@@ -201,78 +199,103 @@ rule name:
 
 ## 常见错误症状与解决方法
 
-- `Error: cores have to be specified for local execution (use --cores N with N being a number >= 1 or 'all')`：
+### `Error: cores have to be specified...`
 
-  **忘了加 `--cores` 参数。无论是否设置了 `resources` `threads` 等字段，都必须使用 `--cores`：**
+**忘了加 `--cores` 参数。无论是否设置了 `resources` `threads` 等字段，都必须使用 `--cores`：**
 
-  ``` 
-  snakemake --cores 1
-  ```
+``` 
+snakemake --cores 1
+```
 
-- `WildcardError`：
+### `WildcardError`
 
-  具体格式是
+具体格式是
 
-  ```
-  WildcardError in rule RULE in file "xxx.xxx", line 40:
-  Wildcards in params cannot be determined from output files. Note that you have to use a function to deactivate automatic wildcard expansion in params strings, e.g., `lambda wildcards: '{test}'`. Also see https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#non-file-parameters-for-rules: ......
-  'seq_id'
-  ```
+```
+WildcardError in rule RULE in file "xxx.xxx", line 40:
+Wildcards in params cannot be determined from output files. Note that you have to use a function to deactivate automatic wildcard expansion in params strings, e.g., `lambda wildcards: '{test}'`. Also see https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#non-file-parameters-for-rules: ......
+'seq_id'
+```
 
-  这是通配符出了问题。如果通配符出现了不一致，Snakemake 无法推断其具体内容，就会发生该报错。
+这是通配符出了问题。如果通配符出现了不一致，Snakemake 无法推断其具体内容，就会发生该报错。
 
-  第一行给出了错误发生位置，第三行给出了无法推断内容的通配符。**请检查这个通配符是否已知，或者是否可推断。**
+第一行给出了错误发生位置，第三行给出了无法推断内容的通配符。**请检查这个通配符是否已知，或者是否可推断。**
 
-  两种可行案例是：
+两种可行案例是：
 
-  ```
-  # Example 1
-  seq_id = ["1", "2", "3"]
-  
-  ......
-  	output:
-  		"{seq_id}.gff"
-  
-  # Example 2
-  ......
-  	input:
-  		"{seq_id}.gff3"
-  	output:
-  		"{seq_id}.gff"
-  ```
+```
+# Example 1
+seq_id = ["1", "2", "3"]
 
-- `IncompleteFilesException`：
+......
+	output:
+		"{seq_id}.gff"
 
-  格式是
+# Example 2
+......
+	input:
+		"{seq_id}.gff3"
+	output:
+		"{seq_id}.gff"
+```
 
-  ```
-  IncompleteFilesException:
-  The files below seem to be incomplete. If you are sure that certain files are not incomplete, mark them as complete with
-  
-      snakemake --cleanup-metadata <filenames>
-  
-  To re-generate the files rerun your command with the --rerun-incomplete flag.
-  Incomplete files:
-  xxx.xxx
-  ```
+### `IncompleteFilesException`
 
-  两种情况，分别处置：
+格式是
 
-  - **如果是因为上次计算发生中断，结果不完整**，请在下次执行 `snakemake` 时，加 `--rerun-incomplete` 参数。
-  - **如果 `xxx.xxx` 确是经过完整计算的产物**，请先执行 `snakemake --cleanup-metadata xxx.xxx`，将其标记为 complete。
+```
+IncompleteFilesException:
+The files below seem to be incomplete. If you are sure that certain files are not incomplete, mark them as complete with
 
-- 报错中出现 `line`：
+    snakemake --cleanup-metadata <filenames>
 
-  例如
+To re-generate the files rerun your command with the --rerun-incomplete flag.
+Incomplete files:
+xxx.xxx
+```
 
-  ```
-  NameError in file "xxx/xxx/xxx.xx", line 14:
-  name 'ids' is not defined
-    File "xxx/xxx/xxx.xx", line 27, in <module>
-    File "xxx/xxx/xxx.xx", line 14, in get_seq_ids
-  ```
+两种情况，分别处置：
 
-  属于 Python 解释器报错。检查指定的行有没有语法错误。
+- **如果是因为上次计算发生中断，结果不完整**，请在下次执行 `snakemake` 时，加 `--rerun-incomplete` 参数。
+- **如果 `xxx.xxx` 确是经过完整计算的产物**，请先执行 `snakemake --cleanup-metadata xxx.xxx`，将其标记为 complete。
+
+### 带 `ILP solver` 的橙色字警告 
+
+原话是
+
+`Failed to solve scheduling problem with ILP solver, falling back to greedy scheduler. You likely have to fix your ILP solver installation. Error message: PULP_CBC_CMD: Not Available (check permissions on cbc)`
+
+这**并非致命错误**，不影响后续运行。
+
+但因为从“Integer Linear Programming Solver”（ILP Solver）回退到性能更差的“Greedy Scheduler”（贪心算法），求解的速度会非常慢，表现为**复杂 `snakemake` 执行后要等待很久才能启动**。
+
+最简单的方法是安装 `coincbc`：
+
+`conda install -c conda-forge coincbc`
+
+然后，在终端里进行测试：
+
+```sh
+$ python3
+......
+$ import pulp
+$ print(pulp.pulpTestAll())
+```
+
+检查输出里是否显示 `Solver: CBC`。如果显示，症状应该能够消失。
+
+### 报错中出现 `line`
+
+例如
+
+```
+NameError in file "xxx/xxx/xxx.xx", line 14:
+name 'ids' is not defined
+  File "xxx/xxx/xxx.xx", line 27, in <module>
+  File "xxx/xxx/xxx.xx", line 14, in get_seq_ids
+```
+
+属于 Python 解释器报错。检查指定的行有没有语法错误。
 
 ## 其他
 
@@ -288,15 +311,7 @@ rule name:
 
 官方教程详见
 
-[https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html#tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html#tutorial)；
-
-Zread.ai 已经缓存了该项目主要文档的中文 AI 版本
-
-[https://zread.ai/snakemake/snakemake](https://zread.ai/snakemake/snakemake)；
-
-喜欢看视频来学习，但苦于 Youtube 上官方教学视频全是英文的，可以看这个系列的教学视频：
-
-https://www.bilibili.com/video/BV1jb411i76T?spm_id_from=333.788.videopod.episodes。
+[https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html#tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html#tutorial)。
 
 目前我还没有整理 Snakemake 工作流模板，不过未来应该会更新。**如需查阅，请在这个网站里选择“Snakemake 模板”标签。**若模板存在问题无法运行，**请点击左侧面板最下方的那只“octo-cat”，带着报错信息提交 issue。**
 
