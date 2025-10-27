@@ -278,11 +278,26 @@ xxx.xxx
 ```sh
 $ python3
 ......
-$ import pulp
-$ print(pulp.pulpTestAll())
+>> import pulp
+>> solver = pulp.PULP_CBC_CMD(msg=True)
+>> print(solver.available())
 ```
 
-检查输出里是否显示 `Solver: CBC`。如果显示，症状应该能够消失。
+如果安装之后又出现莫名其妙的错误（特别是 `free(): invalid pointer` 这种奇葩），那就换 GLPK。它的速度肯定不如 cdc，但兼容性比 cdc 好很多：
+
+`conda install -c conda-forge glpk`
+
+然后测试
+
+```sh
+>> import pulp
+>> solver = pulp.GLPK_CMD(msg=True)
+>> print(solver.available())
+```
+
+> 如果使用 glpk 求解器，需要在 snakemake 命令里使用 `--scheduler-ilp-solver` 参数：
+>
+> `snakemake --cores all --scheduler-ilp-solver GLPK_CMD`
 
 ### 报错中出现 `line`
 
