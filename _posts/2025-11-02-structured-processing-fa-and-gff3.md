@@ -303,7 +303,7 @@ CM009658.1	Chr05
 
 最后跑一下脚本就 OK 了。
 
-```PY
+```py
 import argparse
 
 from Bio import SeqIO
