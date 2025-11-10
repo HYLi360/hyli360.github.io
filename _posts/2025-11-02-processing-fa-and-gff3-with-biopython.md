@@ -1,6 +1,6 @@
 ---
 title: "使用BioPython处理FASTA/GFF文件"
-tags: [bioinfo-tools]
+tags: [BioPython]
 date: 2025-11-02 12:08:15 +0800
 description: "Python中，处理.fna/.faa（FASTA）的功能由BioPython实现；处理.gff3（GFF3）的功能由BioPython库的扩展库BCBio.gff实现。"
 categories: [生物信息学, 工具]
@@ -318,6 +318,11 @@ def switch_dict(map_path: str) -> dict:
             dictionary[line_ls[0]] = line_ls[1]
     return dictionary
 
+# 生成默认名
+def default_output_name(filename):
+    name, ext = filename.rsplit('.', 1)
+    return f"{name}_changed.{ext}"
+
 def main():
     print()
     parser = argparse.ArgumentParser(description="Renaming the chromosome name in fna/gff3 file.")
@@ -329,9 +334,10 @@ def main():
     parser.add_argument('--outgff', required=False, help='Output GFF3 file name. Optional.')
 
     # 生成参数。如无，在文件名后加 `_changed`
+    # 如果文件名带多个“.”，则只在最后一个“.”（扩展名分隔符）处插入“_changed”
     args = parser.parse_args()
-    outfna = args.outfna if args.outfna else args.infna.replace('.', '_changed.')
-    outgff = args.outgff if args.outgff else args.ingff.replace('.', '_changed.')
+    outfna = args.outfna if args.outfna else default_output_name(args.infna)
+    outgff = args.outgff if args.outgff else default_output_name(args.ingff)
 
     # 初始化
     d = switch_dict(args.inmap)
@@ -367,5 +373,69 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+不过由于 GFF3 格式非常灵活，使用上面这种死脚本，有时**会出现 BCBio.gff 解析不了 GFF3 文件的问题**。所幸染色体编号就出现在固定的那几个位置，直接替换要比解析再替换可靠很多，也不会出现莫名其妙的错误。
+
+```py
+import argparse
+import re
+
+from Bio import SeqIO
+
+def switch_dict(map_path: str) -> dict:
+    dictionary = {}
+    with open(map_path, "r") as map:
+        for line in map:
+            line_ls = line.strip().split("\t")
+            dictionary[line_ls[0]] = line_ls[1]
+    return dictionary
+
+def default_output_name(filename):
+    name, ext = filename.rsplit('.', 1)
+    return f"{name}_changed.{ext}"
+
+def main():
+    print()
+    parser = argparse.ArgumentParser(description="Renaming the chromosome name in fna/gff3 file.")
+
+    parser.add_argument('--infna', required=True, help='Input FNA file name.')
+    parser.add_argument('--ingff', required=True, help='Input GFF3 file name.')
+    parser.add_argument('--inmap', required=True, help='Old and new Chr name, in TSV format.')
+    parser.add_argument('--outfna', required=False, help='Output FNA file name. Optional.')
+    parser.add_argument('--outgff', required=False, help='Output GFF3 file name. Optional.')
+
+    args = parser.parse_args()
+    outfna = args.outfna if args.outfna else default_output_name(args.infna)
+    outgff = args.outgff if args.outgff else default_output_name(args.ingff)
+
+    d = switch_dict(args.inmap)
+    fna_record = []
+    gff_record = ""
+    
+    # 更改 FNA 里的条目
+    for idx, rec in enumerate(SeqIO.parse(args.infna, "fasta")):
+        # 改名；若无对应则保持原状
+        try: rec.id = d[rec.id]
+        except KeyError: rec.id = rec.id
+        # 添加记录
+        fna_record.append(rec)
+
+    # 写入
+    SeqIO.write(fna_record, outfna, "fasta")
+
+    # 更改 GFF 里的条目
+    pattern = re.compile("|".join(re.escape(k) for k in d.keys()))
+    with open(args.ingff) as gff_original, open(outgff, "w") as gff_changed:
+        for idx, rec in enumerate(gff_original):
+            gff_new = pattern.sub(lambda m: d[m.group(0)], rec)
+            gff_record = gff_record + gff_new
+        gff_changed.write(gff_record)
+    
+    print("DONE!")
+
+if __name__ == "__main__":
+    main()
+
 ```
 
