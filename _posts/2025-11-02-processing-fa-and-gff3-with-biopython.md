@@ -1,8 +1,8 @@
 ---
-title: "使用BioPython处理FASTA/GFF文件"
-tags: [BioPython]
+title: "使用Biopython处理FASTA/GFF文件"
+tags: [Biopython]
 date: 2025-11-02 12:08:15 +0800
-description: "Python中，处理.fna/.faa（FASTA）的功能由BioPython实现；处理.gff3（GFF3）的功能由BioPython库的扩展库BCBio.gff实现。"
+description: "Python中，处理.fna/.faa（FASTA）的功能由Biopython实现；处理.gff3（GFF3）的功能由Biopython库的扩展库BCBio.gff实现。"
 categories: [生物信息学, 工具]
 ---
 
@@ -128,9 +128,9 @@ SeqIO.write(new_record, "out.fna", "fasta")
 
 ## 处理 GFF3 文件
 
-`BioPython` 并没有对 GFF3 格式的完备实现；但它的其中一个扩展库—— [`BCBio.GFF`](https://github.com/chapmanb/bcbb/tree/master/gff)，可以实现对 GFF3 格式文件的各种操作。
+`Biopython` 并没有对 GFF3 格式的完备实现；但它的其中一个扩展库—— [`BCBio.GFF`](https://github.com/chapmanb/bcbb/tree/master/gff)，可以实现对 GFF3 格式文件的各种操作。
 
-bcbio-gff 由 BioPython 的开发者之一 Brad Chapman 独立开发并维护，其实现正是基于 BioPython 提供的各类核心对象。
+bcbio-gff 由 Biopython 的开发者之一 Brad Chapman 独立开发并维护，其实现正是基于 Biopython 提供的各类核心对象。
 
 ---
 
