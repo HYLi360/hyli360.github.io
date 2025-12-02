@@ -80,7 +80,7 @@ for idx, rec in enumerate(SeqIO.parse("Vvi_Genome.fa", "fasta")):
 
 - `annotations`，即注释，以字典“键-值对”形式呈现。可改，可补充，但不会显示在 `>` 行。
 
-- `seq`，序列信息。也可改，但现在暂时没有用处。
+- `seq`，序列信息。也可改，但现在暂时不去处理它。
 
 想写回并验证结果，请使用 `SeqIO.write`。
 
