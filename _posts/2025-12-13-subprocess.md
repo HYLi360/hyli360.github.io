@@ -1,5 +1,5 @@
 ---
-title:使用subprocess模块创建附加进程
+title:"使用subprocess模块创建附加进程"
 tags: [Python, 标准库]
 date: 2025-12-13 16:03:50 +0800
 description: "以调用外部程序，或者实现进程串联与交互。"
@@ -10,7 +10,7 @@ categories: [Python, 标准库]
 
 这些例子已经在笔者的 Ubuntu + Python 3.14 平台上得到测试，且在 Windows 上进行了验证。
 
-## `subprocess.run()`
+## subprocess.run()
 
 ```py
 import subprocess
@@ -53,7 +53,7 @@ subprocess.run(["此处", "填写", "一条命令",], capture_output=True, text=
 > | `subprocess.check_call(cmd)`   | `subprocess.run(cmd, check=True)`                            |
 > | `subprocess.check_output(cmd)` | `subprocess.run(cmd, check=True, stdout=subprocess.PIPE).stdout` |
 
-## `CompletedProcess`、`capture_output` 与 `text`
+## CompletedProcess、capture_output 与 text
 
 `process.run()` 会产生一个 `CompletedProcess` 类，包含命令参数与返回码；另外，如果你选择 `capture_output`，你还会得到 `stdout` 与 `stderr`。请注意这三条命令中 `proc` 的微妙变化：
 
@@ -86,7 +86,7 @@ CompletedProcess(args=['echo', 'Hello, World!'], returncode=0, stdout='Hello, Wo
 """
 ```
 
-## 该不该使用 `shell`？
+## 该不该使用“shell=True”？
 
 如果 `shell=True`，`subprocess` 会创建一个 Shell 中间进程，并让它执行这个命令。其原理是将
 
@@ -170,7 +170,7 @@ CompletedProcess(args=['echo', '--version'],returncode=0, stdout='echo (uutils c
 
 可以看到，`shutil.which()` 找到了文件路径，且 `version` 命令正确返回结果。
 
-## `stdin`、`stdout` 与 `stderr`
+## stdin、stdout 与 stderr
 
 这三个参数可用来定义该命令中标准输入、标准输出与标准错误输出的位置。常见用法如下：
 
@@ -186,7 +186,7 @@ CompletedProcess(args=['echo', '--version'],returncode=0, stdout='echo (uutils c
 
 - `TimeoutExpired`：命令超时。在 `subprocess.run()` 里设置 `timeout` 参数，如果该命令在 `timeout`（秒）内没有完成，就会抛出此异常。
 
-## 更高级的子进程创建方法：`subprocess.Popen`
+## 更高级的子进程创建方法：subprocess.Popen
 
 > 以下这些案例都基于 POSIX 系统。Windows 上虽然没有这些指令，但仍然支持管道和信号特性。后面会提供同时兼容这两个平台的示范代码。
 
