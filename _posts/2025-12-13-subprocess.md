@@ -1,9 +1,9 @@
 ---
-title:"使用subprocess模块创建附加进程"
-tags: [Python, 标准库]
+title: "使用subprocess模块创建附加进程"
+tags: ["Python", 标准库]
 date: 2025-12-13 16:03:50 +0800
 description: "以调用外部程序，或者实现进程串联与交互。"
-categories: [Python, 标准库]
+categories: ["Python", "标准库"]
 ---
 
 `subprocess` 模块自 Python 3.5 起正式引入，并取代旧有的 `os.system` 与 `os.spawn*`，以及旧有的 `run()`、`check_call` 和 `check_output` API（即使这些 API 目前仍然可用）。该模块的基本功能是建立一个新进程，调用方法类似于在终端里执行一条 command，但标准输出与标准错误输出可被 Python 捕获。这很适用于在 Python 代码中调用外部命令的场景（例如使用 Python 库无法提供的功能）。
