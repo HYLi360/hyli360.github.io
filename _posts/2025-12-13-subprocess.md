@@ -126,7 +126,7 @@ CompletedProcess(args=['echo', 'Hello, world!'], returncode=0)
 
 但搞笑的是，在 CMD 上运行 `where where`，竟然真的能找到它对应的可执行程序：
 
-```cmd
+```sh
 >where where
 C:\Windows\System32\where.exe
 ```
@@ -203,7 +203,7 @@ class subprocess.Popen(args, bufsize=-1, executable=None, stdin=None, stdout=Non
                        encoding=None, errors=None, text=None, pipesize=-1, process_group=None)
 ```
 
-——太长了，不想看！
+——谁来替我省流一下啊！
 
 不过这个类里面，有很多属性其实已经接触过了，例如 `stdin`、`stdout`、`stderr`、`cwd`、`shell`，等等。`run()` 等的工作无非是实例化这个 `Popen` 对象，执行它，最后得到一个 `CompletedProcess` 对象。
 
@@ -393,11 +393,11 @@ p.wait()
 
 ## 进一步阅读
 
-- [subprocess — Spawning Additional Processes](https://pymotw.com/3/subprocess/index.html)
-
-  国内有中文版，叫《Python 3 标准库》。`subprocess` 库对应该书第 10.1 节。
-
 - [subprocess——子进程管理](https://docs.python.org/zh-cn/3/library/subprocess.html)
 
   Python 官方的中文文档。
+
+- [subprocess — Spawning Additional Processes](https://pymotw.com/3/subprocess/index.html)
+
+  国内有中文版，叫《Python 3 标准库》。`subprocess` 库对应该书第 10.1 节。虽然已经有了官方文档，但该书贵在案例丰富，拿起即用。中文名没有把英文名里的精髓翻译出来（*The Python 3 Standard Library by Example* 里的 ***Example***），让人以为不过是把官方文档照抄了一遍，怪可惜的。
 
