@@ -45,7 +45,7 @@ class threading.Thread(group=None, target=None, name=None, args=(), kwargs={}, *
 
 回到 `Process`。这里我们看到 `p` 还有两个方法：`start()` 和 `join()`。`start()` 用来启动这个进程，而 `join()` 可以产生“阻塞”：直到这个进程结束，才能继续执行后面的代码。
 
-但别忘了——还有个 `run()` 方法呢！听上去似乎也能用来启动这个进程。不过有意思的是，在主程序里，你不可能连续对同一个 `Process` 做两次 `start`，但两次 `run()` 则是被允许的。
+但别忘了——还有个 `run()` 方法呢！听上去似乎也能用来启动这个进程。不过有意思的是，在主程序里，你不可能连续对同一个 `Process` 做两次 `start()`，但两次 `run()` 则是被允许的。
 
 ```py
 Traceback (most recent call last):
@@ -370,17 +370,17 @@ if __name__ == "__main__":
 
 我们使用 `timeit` 来测量运行时间。需要注意，`timeit` 测出的总运行时间总是比实际更长一些；但在同时使用 `timeit` 的情况下，这些数据仍然是有可比性的。
 
-![plot](/home/hyli360/文档/python_project/PLAYGROUND/plot.png)
+![plota](https://github.com/HYLi360/hyli360.github.io/blob/main/assets/img/PicGo/multiprocessing1a.png?raw=true)
 
 可以看到，虽然运行时间随进程数增加而逐渐减少，但变化并非线性。事实上，当进程数比物理核心数还要多时，进程数量增加带来的增益并不显著，这是因为即使是超线程也无法让物理核心增加，本质仍然是同一个物理核心，不同的时间片。
 
 为排除大小核架构可能引发的变化不平衡性，我们又在 EPYC 9654 上进行测试，从 1 进程逐渐增加到 192 进程。另外，数列长度从 5,000,000 增加到 100,000,000。
 
-![plot1](/home/hyli360/文档/python_project/PLAYGROUND/plot1.png)
+![plotb](https://github.com/HYLi360/hyli360.github.io/blob/main/assets/img/PicGo/multiprocessing1b.png?raw=true)
 
 第一张图有些无聊，也不太容易看出什么；但到了第二张图，我们原本假设总运行时间乘以进程数，应当能够还原回接近单进程运行所需的时间，可结果这个曲线是稳步上升的！是的，甚至没有显著的平台期，就是在逐渐上升！
 
-![plot3](/home/hyli360/文档/python_project/PLAYGROUND/plot3.png)
+![plotc](https://github.com/HYLi360/hyli360.github.io/blob/main/assets/img/PicGo/multiprocessing1c.png?raw=true)
 
 我们可以将总运行时间与进程数的积当作总 CPU 时间，此时我们看到，进程全开的情况下，CPU 时间反而比单进程长 1 倍都不止。原因有很多，不止是单核与全核状态下不同的时钟频率（单核 3.8GHz vs. 全核 2.4GHz），还有进程分叉并启动，以及数据对象序列化与反序列化造成的开销，更不用说大量内存读写还会造成 I/O 瓶颈。如同杠杆省力不省功，进程增加看似加快运行，其实反而会延长总 CPU 时间。对于按 CPU 时间付费的 HPC 平台，使用多进程计算时不得不高度警惕这个问题——进程确实不是越多越好。
 
