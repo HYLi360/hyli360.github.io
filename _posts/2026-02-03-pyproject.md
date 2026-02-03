@@ -373,5 +373,4 @@ compatibility = "linux"
 
 [maturin 文档](https://www.maturin.rs/config.html) 对此有非常详细的说明。
 
-对于 Cargo 包名、Wheel 包名、import 名混杂的问题，Cargo 和 Wheel 包的名称由各自的项目配置文件（`cargo.toml` 与 `project.toml`）决定，import 名则来自包目录的结构（`./src/import_name`）；由 maturin 编译出来的包则总是使用 import 名——这与纯 Python 下调用自己软件包里的程序是同样道理。
-
+对于 Cargo 包名、Wheel 包名、import 名混杂的问题，Cargo 和 Wheel 包的名称由各自的项目配置文件（`cargo.toml` 的 `package` 名与 `project.toml`）决定，import 名则来自包目录的结构（例如 `./src/import_name`）；由 maturin 编译出来的包则总是使用 `cargo.toml` 里的 `lib` 名。
