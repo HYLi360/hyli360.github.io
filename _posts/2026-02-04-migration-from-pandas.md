@@ -37,13 +37,13 @@ Polars 充分利用 Rust 程序设计语言对并发编程的支持，实现了�
 
 Polars 原生支持两种引擎：针对内存处理优化的引擎，以及专为大规模数据处理优化的流式引擎。Polars 还原生集成支持 cuDF（GPU 加速）的计算引擎。这些引擎都将得益于 Polars 的查询优化器，且 Polars 可在不同引擎之间确保语义一致性。相比之下，Pandas 的实现可以在 NumPy 和 PyArrow 之间进行调度，但由于 Pandas 的严格性保证较弱，不同后端之间的数据类型输出及语义可能存在差异，这会导致难以察觉的错误。
 
-### Polars 支持“惰性求值”（lazily evaluation）与查询优化。
+### Polars 支持“延迟求值”（lazily evaluation）与查询优化。
 
-“及早求值”（eager evaluation）指代码运行后会立即执行计算。“惰性求值”则是运行到代码所在行时，先保存其底层逻辑至查询计划中，而不是直接执行计算。
+“即时求值”（eager evaluation）指代码运行后会立即执行计算。“延迟求值”则是运行到代码所在行时，先保存其底层逻辑至查询计划中，而不是直接执行计算。
 
-Polars 同时支持“及早求值”与“惰性求值”，而 Pandas 只支持“及早求值”。“惰性求值”之所以强大，在于 Polars 可在分析查询计划时自动执行查询优化，以寻找加速查询或降低内存占用的方法。
+Polars 同时支持“即时求值”与“延迟求值”，而 Pandas 只支持“即时求值”。“延迟求值”之所以强大，在于 Polars 可在分析查询计划时自动执行查询优化，以寻找加速查询或降低内存占用的方法。
 
-Dask 在生成查询计划时同样支持“惰性求值”。
+Dask 在生成查询计划时同样支持“延迟求值”。
 
 ### Polars 很严格。
 
@@ -95,11 +95,11 @@ df.filter(pl.col("a") < 10)
 
 就像下面“表达式”小节里的说明那样，Polars 可并行执行像 `.select`、`.filter` 这样的操作，并可根据完整的数据选择条件进行查询优化。
 
-### 巧用“惰性求值”
+### 巧用“延迟求值”
 
-在Polars中，采用“惰性求值”进行工作非常简单，也应作为默认设置，因为它能让 Polars 实现查询优化。
+在Polars中，采用“延迟求值”进行工作非常简单，也应作为默认设置，因为它能让 Polars 实现查询优化。
 
-我们可以通过使用隐式惰性函数（例如 `scan_csv`），或显式使用 `lazy` 方法来运行惰性模式。
+我们可以通过使用隐式延迟函数（例如 `scan_csv`），或显式使用 `lazy` 方法来运行延迟模式。
 
 以下这个简单的示例，演示了我们如何从磁盘读取一个 CSV 文件并执行分组操作。该 CSV 文件包含多个列，但我们只需对其中一个 ID 列（`id1`）进行分组，然后按值列（`v1`）求和。在 Pandas 上，一般需要这么做：
 
@@ -108,7 +108,7 @@ df = pd.read_csv(csv_file, usecols=["id1","v1"])
 grouped_df = df.loc[:,["id1","v1"]].groupby("id1").sum()
 ```
 
-但在 Polars 上，你可以将 Pandas 上的 `read_csv`（“及早求值”）换成 `scan_csv`（“惰性求值”），从而享受到惰性求值带来的查询优化：
+但在 Polars 上，你可以将 Pandas 上的 `read_csv`（“即时求值”）换成 `scan_csv`（“延迟求值”），从而享受到延迟求值带来的查询优化：
 
 ```py
 df = pl.scan_csv(csv_file)
@@ -117,9 +117,9 @@ grouped_df = df.group_by("id1").agg(pl.col("v1").sum()).collect()
 
 Polars 通过只识别 `id1` 与 `v1` 两列来优化此查询，因此只会从 CSV 文件读取 `id1` 与 `v1` 两列。通过调用 `.collect()` 方法，我们指示 Polars 立即执行该查询。
 
-想以“及早求值”方式运行该查询，只需将上述 Polars 代码中的 `scan_csv` 替换为 `read_csv`。
+想以“即时求值”方式运行该查询，只需将上述 Polars 代码中的 `scan_csv` 替换为 `read_csv`。
 
-您可在 [惰性 API](https://docs.pola.rs/user-guide/lazy/using/) 章节中了解更多关于惰性求值的细节。
+您可在 [延迟 API](https://docs.pola.rs/user-guide/lazy/using/) 章节中了解更多关于延迟求值的细节。
 
 ### 尽情“表达”你自己
 
