@@ -6,7 +6,7 @@ description: 该懒则懒。
 categories: [Python, Polars]
 ---
 
-Polars 同时支持“即时”与“延迟”计算。“即时”（“及早求值”）模式下，程序会直接执行所在行的代码，这是绝大多数程序（包括 Pandas）的默认运行模式；而在“延迟”（“惰性求值”）模式下，程序不会直接执行所在行代码，而是先将它缓存起来，等到真正需要的时候再执行计算，这允许程序在运行时优化其逻辑，从而改善性能。
+Polars 同时支持“即时”与“延迟”计算。“即时”（“及早求值”）模式下，程序会直接执行所在行的代码，这是绝大多数程序（包括 pandas）的默认运行模式；而在“延迟”（“惰性求值”）模式下，程序不会直接执行所在行代码，而是先将它缓存起来，等到真正需要的时候再执行计算，这允许程序在运行时优化其逻辑，从而改善性能。
 
 “惰性求值”本身其实是非常古老的概念，甚至可追溯到 Haskell（默认即惰性求值）、Scheme（`delay`）所在的时期，如今已广泛应用到任何具有函数式编程范式的程序设计语言。仍以 Python 为例，我们非常熟悉的 `range` 其实就是一个不错的起点：
 
@@ -49,7 +49,7 @@ MemoryError
 
 Python 还是阻止了我们愚蠢的请求。当然我不希望任何人模仿，这几乎必然会导致 OOM。
 
-在 Python 2 中，`range` 确实是“即时”函数，生成的就是一个列表；但在 Python 3，`range` 返回的是一个本身就叫 `range` 的不可变对象，包含起点、终点与步长，内存占用不会超过数百 Bytes。等到你任意“取出”一个元素时，Python 会通过计算而非 indexing 返回结果。
+在 Python 2 中，`range` 确实是“即时”函数，生成的就是一个列表；但在 Python 3，`range` 返回的是一个本身就叫 `range` 的不可变对象，包含起点、终点与步长，内存占用不会超过数百 Bytes。等到你任意“取出”一个元素时，Python 会通过计算而非 indexing 返回结果。强调一下，这是个纯数学计算过程。
 
 > The advantage of the [`range`](https://docs.python.org/3/library/stdtypes.html#range) type over a regular [`list`](https://docs.python.org/3/library/stdtypes.html#list) or [`tuple`](https://docs.python.org/3/library/stdtypes.html#tuple) is that a [`range`](https://docs.python.org/3/library/stdtypes.html#range) object will always take the same (small) amount of memory, no matter the size of the range it represents (as it only stores the `start`, `stop` and `step` values, calculating individual items and subranges as needed).
 >
@@ -138,9 +138,9 @@ Polars 的答案是：我们希望这些函数/方法是指向性明确且可预
 
 也就是说，只有时机相当紧迫，你必须进行回应时，这种“惰性”就会消失，从而坍缩为一个可观测的值。`main` 是程序入口，IO 是程序与外界交流的通道，如果它们都要变成“惰性”，那就如同睡死在家的懒虫一样门都不出，更不要提下楼抬水的事。
 
-另外一些情况，包括模式匹配（有点像 Python 的 `match...case...`），单看 `match`（在 Haskell 里似乎是 `case`？完全反过来了啊！）就不行了，你需要每个分支都展开再扫一眼，甚至还要通过计算来查看是否该走这个分支。这时想怠慢都不敢怠慢了。
+另外一些情况，例如模式匹配（有点像 Python 的 `match...case...`），单看 `match`（在 Haskell 里似乎是 `case`？完全反过来了啊！）就不行了，你需要每个分支都展开扫一眼，甚至还要通过计算来查看是否该走这个分支。这时想怠慢都不敢怠慢了。
 
-但程序员能不能手动让它发生坍缩，从而进行观察？`seq` 与 bang pattern 就是所谓的“手工严格点”，如同发令枪——或者在我们这个情境下，我给他打来的电话——接到了我的电话，你就要立刻赶过来！这是命令！
+但程序员能不能手动让它发生坍缩，从而进行观察？`seq` 与 bang pattern 就是所谓的“手工严格点”，如同发令枪——或者在我们这个情境下，我打过来的电话——接到了我的电话，你就要立刻赶过来！这是命令！
 
 另一个问题是顺序破坏。如果研究过编译器优化的问题，你就应该知道我要说什么：是的，我们无法保证 Polars 不会在优化时破坏执行顺序，导致无法预测的计算结果。*Rust Atomics and Locks* 专门有一章讲解内存序，很值得使用 Rust（甚至是 C++）进行并发编程的程序员阅读一下，但这里不会讲那么深入，我们还是简单进行说明。
 
@@ -167,4 +167,52 @@ Called 3 times!
 
 惰性查询只对“最终数据结果”负责，而优化后的执行路径（并行、分块、重排、裁剪）不保证与源码书写顺序一致。在 Polars 中，表达式系统默认假设计算是纯的；一旦引入 Python UDF（如 `map_elements`），它就成为优化器无法理解的黑盒，不仅性能会退化到 Python 逐元素循环（这是官方强烈不推荐的一个原因），还会让 UDF 的调用次数/顺序/时机变得不可依赖，从而任何依赖外部状态（计数器、日志、随机数、时间、写文件等）的副作用都可能产生不可预测的可观测差异。
 
-Haskell 使用 IO Monad 隔离副作用，而 Polars 则先用 LazyFrame 隔离它，再用自己的列表达式/声明式语言（而非 Python 的命令式语言）防止副作用的发生。任何表达式都是以列为单位的纯变换，不会引发任何可观测的不一致行为。惰性带来的查询优化需要以限制程序员表达为代价——但即便如此，Polars 仍然尽全力让程序员能够轻松表达自我。
+Haskell 使用 IO Monad 隔离副作用，而 Polars 则先用 LazyFrame 隔离它，再用自己的列表达式/声明式语言（而非 Python 的命令式语言）防止副作用的发生。任何表达式都是以列为单位的纯变换，不会引发任何可观测的不一致行为。
+
+惰性带来的查询优化需要以限制程序员表达为代价——但即便如此，Polars 仍然尽全力让程序员能够轻松表达自我。例如，在 pandas，完全不会有人阻止你这样做：
+
+```py
+for i in range(len(df)):
+    if df.iloc[i]["x"] > 0:                     # 随意 indexing！
+        df.iloc[i]["y"] = df.iloc[i]["y"] * 2   # 随意变异！
+        print(f"Modified row {i}")              # 随意副作用！
+        if some_external_api_check(df.iloc[i]): # 随意 IO！
+            break                               # 随意控制流！
+```
+
+在 Polars，你无法做到这些。但在框架之下也并非无路可走：
+
+```py
+# 表达式 DSL
+# 这是基于表达式实现的 if-then-else 逻辑
+pl.when(pl.col("x") > 0).then(pl.col("y") * 2) .otherwise(pl.col("z"))
+
+# 窗口函数
+# 它可以替代 pandas 的 groupby 与 transform
+pl.col("y").sum().over("group")
+
+# 显式回退
+# 使用“map_elements”即接受性能惩罚
+def f(x):
+    print("seen", x)   # 副作用
+    return x * 2
+df.with_columns(pl.col("x").map_elements(f))
+
+# 完全回退到 eager 世界
+df.collect().to_pandas().apply(...)
+```
+
+“暂时的后退换来继续前进的潜力”。Rust 语言本身也是如此：使用更加高深难懂的“所有权模型”“借用与可变借用”“生命周期”等概念，抛弃了 GC，革除了“野指针”，换来了数理逻辑上的“内存安全”。说不上这么做到底有没有意义，反正 Rust 和 Polars 把这些问题都啃下来了，还活的不错。
+
+不过 pandas 最近也开始发力——今年 1 月，[pandas 3.0](https://pandas.pydata.org/docs/whatsnew/v3.0.0.html) 已经带着 CoW（写时复制）与 PyArrow 后端再次杀出重围，甚至将 Polars 的部分语法给学了去：
+
+```py
+>>> df.assign(c = pd.col('a') + pd.col('b')) 
+   a  b  c
+0  1  4  5
+1  1  5  6
+2  2  6  8
+```
+
+Polars 的强大竟反过来帮助了 pandas 的进步。没想到啊，大家都能有光明的未来。
+
