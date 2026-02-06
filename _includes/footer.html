@@ -9,7 +9,7 @@
 >
   <p>
     {{- '©' }}
-    <time>{{ 'now' | date: '%Y' }}</time>
+    <time>2025-{{ 'now' | date: '%Y' }}</time>
 
     {% if site.social.links %}
       <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>.
@@ -26,9 +26,11 @@
         {{- site.data.locales[include.lang].copyright.brief -}}
       </span>
     {% endif %}
+  </p>
+
+  <p>
     {% if site.icp %}
       <span class="ms-2">
-        <img style="width:32px; height:32px; margin-bottom:-8px;" src="https://github.com/HYLi360/hyli360.github.io/blob/main/assets/moe/icon120.png?raw=true" alt="moe icp icon">
         <a href="https://icp.gov.moe/?keyword=20260416" target="_blank">
           {{ site.icp }}
         </a>
